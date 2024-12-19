@@ -15,10 +15,5 @@ export const postSignin = async (
     body: JSON.stringify(formData),
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.msg);
-  }
-  return data;
+  return await response.json();
 };

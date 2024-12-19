@@ -2,8 +2,14 @@ import Input from "../components/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { postSignin } from "../api/authAPI";
 import { SigninFormDataType } from "../types/authType";
+import { validateJWT } from "../utils/validateJWT";
 
 const Login = () => {
+  const isTokenExpired = validateJWT();
+  if (isTokenExpired) {
+    localStorage.removeItem("accesstoken");
+  }
+
   const {
     register,
     formState: { errors, isSubmitting },
@@ -26,14 +32,17 @@ const Login = () => {
   };
 
   const onSubmit: SubmitHandler<SigninFormDataType> = async (formData) => {
-    console.log("로그인 시도:", formData);
-    await postSignin(formData);
+    const result = await postSignin(formData);
+    if (result.errYn === "N") {
+      console.log(result);
+      localStorage.setItem("accesstoken", result.data.accessToken);
+    }
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='w-1/6 h-screen mx-auto flex flex-col justify-center items-center gap-x-4'
+      className='w-80 h-screen mx-auto flex flex-col justify-center items-center gap-x-4'
     >
       <h1 className='text-8xl text-primary font-extrabold mb-10'>dozn</h1>
       <Input
