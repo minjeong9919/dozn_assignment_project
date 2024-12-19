@@ -4,11 +4,19 @@ export interface SigninFormDataType {
 }
 
 export interface SigninResponseDataForm {
-  errorYn: string;
+  errYn: string;
   code: string;
   msg: string;
   data: {
     accessToken: string;
     loginFailCount: string;
   };
+}
+
+export interface DecodedJWTType {
+  apiKey: string;
+  exp: number;
+  iat: number;
+  identification: string;
+  isDozn: string;
 }
