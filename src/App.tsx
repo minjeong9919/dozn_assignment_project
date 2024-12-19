@@ -1,7 +1,9 @@
-import "./App.css";
+import Login from "./pages/Login";
+// import "./App.css";
+import "./index.css";
 
 function App() {
-  return <div>프로젝트 세팅 완!</div>;
+  return <Login />;
 }
 
 export default App;
