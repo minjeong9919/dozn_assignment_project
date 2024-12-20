@@ -15,6 +15,7 @@ export interface DataType {
   mdulNm: string | undefined;
   userApiStus: string | undefined;
   callTime?: Date;
+  bookmark?: boolean;
 }
 
 export interface ResponseType {
