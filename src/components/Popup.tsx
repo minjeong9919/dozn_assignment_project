@@ -1,5 +1,10 @@
 import { forwardRef } from "react";
-import { DataType } from "../types/dataTypes";
+import {
+  DataListResponseType,
+  DataType,
+  ScrappingDataResonseType,
+} from "../types/dataTypes";
+import { useFetch } from "../hooks/useFetch";
 
 interface PropsType {
   onClose: (open: boolean) => void;
@@ -8,31 +13,54 @@ interface PropsType {
 
 export const Popup = forwardRef<HTMLDivElement, PropsType>(
   ({ onClose, data }, ref) => {
-    const { apiNm, apiCd, callTime, mdulCustCd, mdulNm } = data;
+    const { apiCd, mdulCustCd } = data;
+
+    const {
+      loading,
+      error,
+      data: scrappingData,
+    } = useFetch<ScrappingDataResonseType>(
+      `/admin/api/recruit/scrp-recruit?mdulCustCd=${mdulCustCd}&apiCd=${apiCd}`
+    );
+
+    const renderObject = (obj: ScrappingDataResonseType) => {
+      return (
+        <div className='min-h-full'>
+          {Object.entries(obj).map(([key, value]) => {
+            if (
+              key === "code" ||
+              key === "msg" ||
+              key === "byteLength" ||
+              key === "errYn"
+            ) {
+              return null;
+            }
+
+            return (
+              <div key={key} className='mb-2'>
+                {typeof value === "object" ? (
+                  renderObject(value)
+                ) : (
+                  <>
+                    <strong>{key}:</strong> <span>{String(value)}</span>
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      );
+    };
+
+    console.log(scrappingData);
+
     return (
-      <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
+      <div className=' fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
         <div
           ref={ref}
-          className='bg-white rounded p-10 flex flex-col justify-center items-center '
+          className='bg-white rounded p-10 overflow-scroll w-11/12 h-3/4 p-10'
         >
-          <h2 className='text-4xl mb-4 font-bold'>{apiNm}</h2>
-          <ol className='flex flex-col gap-2 mb-5'>
-            <li>
-              <strong>호출 시간:</strong> {callTime?.toString()}
-            </li>
-            <li>
-              <strong>API 이름:</strong> {apiNm}
-            </li>
-            <li>
-              <strong>API 코드:</strong> {apiCd}
-            </li>
-            <li>
-              <strong>모듈 코드:</strong> {mdulCustCd}
-            </li>
-            <li>
-              <strong>모듈 이름:</strong> {mdulNm}
-            </li>
-          </ol>
+          {scrappingData && renderObject(scrappingData)}
           <button
             onClick={() => onClose(false)}
             className='bg-primary text-white rounded w-full py-2 text-xl hover:bg-primary100'
