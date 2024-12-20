@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { DataListResponseType } from "../types/dataTypes";
-import Cell from "../components/Cell";
-import { mockData } from "../mock/mockData";
+import { FaArrowLeft } from "react-icons/fa6";
+import { DataType } from "../types/dataTypes";
+// import { mockData } from "../mock/mockData";
 
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState();
+  const [data, setData] = useState<DataType[] | null>(null);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   const colTitles = [
-    "",
     "API 이름",
     "API 코드",
     "API 설명",
@@ -22,8 +22,6 @@ const Home = () => {
     "키워드 이름",
     "제공기관",
   ];
-
-  console.log(data);
 
   const dataListAPI = async (): Promise<DataListResponseType | undefined> => {
     const url = `${BASE_URL}/admin/api/user/api/list?pageSize=10&pageIdx=${currentPage}`;
@@ -57,35 +55,33 @@ const Home = () => {
   }
 
   return (
-    <div className='p-10 text-5xl '>
-      <h1 className='mb-10'>API 목록 조회 결과입니다.</h1>
-      <div className='grid text-xl border'>
-        <div className='grid grid-cols-9'>
-          {colTitles.map((colTitle, idx) => (
-            <Cell
-              key={colTitle}
-              size={`${idx === 0 ? "s" : "m"}`}
-              className='border text-center font-bold'
-            >
+    <table className='p-10 text-5xl '>
+      <caption className='mb-10'>API 목록 조회 결과입니다.</caption>
+      <thead className='text-xl border'>
+        <tr>
+          {colTitles.map((colTitle) => (
+            <th key={colTitle} className='border text-center font-bold'>
               {colTitle}
-            </Cell>
+            </th>
           ))}
-        </div>
-        {mockData?.data.list.map((value, idx) => (
-          <div key={value.apiNm} className='grid grid-cols-9'>
-            <Cell size='s'>{idx}</Cell>
-            <Cell>{value.apiNm}</Cell>
-            <Cell>{value.apiCd}</Cell>
-            <Cell>{value.apiDesc}</Cell>
-            <Cell>{value.cmnCdLginType}</Cell>
-            <Cell>{value.cmnCdLginTypeNm}</Cell>
-            <Cell>{value.kwrdCd}</Cell>
-            <Cell>{value.kwrdNm}</Cell>
-            <Cell>{value.prvr}</Cell>
-          </div>
+        </tr>
+      </thead>
+      <tbody className='text-xl'>
+        {data?.map((value) => (
+          <tr key={value.apiNm}>
+            <th className='border'>{value.apiNm}</th>
+            <th className='border'>{value.apiCd}</th>
+            <th className='border'>{value.apiDesc}</th>
+            <th className='border'>{value.cmnCdLginType}</th>
+            <th className='border'>{value.cmnCdLginTypeNm}</th>
+            <th className='border'>{value.kwrdCd}</th>
+            <th className='border'>{value.kwrdNm}</th>
+            <th className='border'>{value.prvr}</th>
+          </tr>
         ))}
-      </div>
-    </div>
+      </tbody>
+      <button>pagination</button>
+    </table>
   );
 };
 
