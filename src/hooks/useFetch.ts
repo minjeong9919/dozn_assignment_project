@@ -34,7 +34,5 @@ export const useFetch = <T>(url: string) => {
     fetchData();
   }, []);
 
-  console.log(error);
-
   return { fetchData, data, loading, error };
 };
