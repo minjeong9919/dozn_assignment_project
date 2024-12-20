@@ -6,7 +6,7 @@ const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 export const useFetch = <T>(url: string) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
 
   const fetchData = async () => {
     const apiUrl = `${BASE_URL}${url}`;
@@ -22,8 +22,8 @@ export const useFetch = <T>(url: string) => {
     });
     const data = await response.json();
 
-    if (!response.ok || data.errYn === "Y") {
-      setError(error);
+    if (data.errYn === "Y" || !response.ok) {
+      setError(true);
     }
 
     setData(data);
@@ -33,6 +33,8 @@ export const useFetch = <T>(url: string) => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  console.log(error);
 
   return { fetchData, data, loading, error };
 };
