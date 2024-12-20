@@ -1,14 +1,37 @@
+import { useState } from "react";
 import { DataType } from "../types/dataTypes";
+import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 interface propsType {
   data: DataType;
+  initialBookmarkStatus: boolean;
+  onClickStar: (apiNm: string | undefined, addBookmark: boolean) => void;
 }
 
-export const Card = ({ data }: propsType) => {
+export const Card = ({
+  data,
+  onClickStar,
+  initialBookmarkStatus,
+}: propsType) => {
   const { callTime, apiNm, apiCd, mdulCustCd, mdulNm } = data;
+  const [clickedStar, setClickedStar] = useState(initialBookmarkStatus);
+
+  const handleStar = () => {
+    onClickStar(apiNm, !clickedStar);
+    setClickedStar(!clickedStar);
+  };
+
   return (
-    <div className='shadow-xl w-full p-5 rounded'>
-      <h2 className='text-primary text-2xl font-bold mb-6'>{apiNm}</h2>
+    <div className='shadow-xl w-full p-5 rounded cursor-pointer hover:scale-105 ease-in-out'>
+      <div className='flex w-full items-center justify-between mb-6'>
+        <h2 className='text-primary text-2xl font-extrabold'>{apiNm} </h2>
+        {clickedStar ? (
+          <FaStar size={25} onClick={() => handleStar()} />
+        ) : (
+          <FaRegStar size={25} onClick={() => handleStar()} />
+        )}
+      </div>
       <ul className='flex flex-col gap-2'>
         <li>
           <strong>API 이름: </strong>
