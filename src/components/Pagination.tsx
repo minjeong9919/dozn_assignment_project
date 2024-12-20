@@ -8,6 +8,12 @@ interface propsType {
 }
 
 export const Pagination = ({ totalPage, onClickPage }: propsType) => {
+  /**
+   * 페이지네이션의 초기 페이지 값은 '1,2,3,4,5' 입니다.
+   * 다음과 이전 버튼이 존재합니다.
+   * 다음 클릭 시: '1,2,3,4,5' => '6,7,8,9,10'
+   * 이전 클릭 시: '6,7,8,9,10' => '1,2,3,4,5'
+   */
   const [currentPages, setCurrentPages] = useState([1, 2, 3, 4, 5]);
 
   const handlePreviousButtonClick = () => {

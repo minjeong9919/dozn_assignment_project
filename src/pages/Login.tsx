@@ -16,19 +16,40 @@ const Login = () => {
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       admUserId: "",
       userPw: "",
     },
   });
 
+  /**
+   * 유효성 검사를 실행합니다.
+   * 아이디: 4 ~ 12 글자, 필수 입력
+   * 비밀번호: 8글자 이상, 영문, 숫자 , 필수 입력
+   */
   const registers = {
     admUserId: register("admUserId", {
       required: "아이디를 입력하세요.",
+      minLength: {
+        value: 4,
+        message: "아이디는 최소 4글자 이상이어야 합니다.",
+      },
+      maxLength: {
+        value: 12,
+        message: "아이디는 최대 12글자 이하이어야 합니다.",
+      },
     }),
     userPw: register("userPw", {
       required: "비밀번호를 입력해주세요.",
+      minLength: {
+        value: 8,
+        message: "비밀번호는 최소 8글자 이상이어야 합니다.",
+      },
+      pattern: {
+        value: /^(?=.*[a-zA-Z])(?=.*[0-9]).+$/,
+        message: "비밀번호는 영문과 숫자를 포함해야 합니다.",
+      },
     }),
   };
 
@@ -37,6 +58,9 @@ const Login = () => {
     if (result.errYn === "Y") {
       return alert("로그인에 실패했습니다.");
     }
+    /**
+     * 로그읜 성공 시, 엑세스 토큰을 localStorage에 저장 후, 홈페이지로 이동합니다.
+     */
     localStorage.setItem("accesstoken", result.data.accessToken);
     window.location.href = "/";
   };
