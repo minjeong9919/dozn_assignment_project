@@ -4,9 +4,10 @@ import { FaAngleRight } from "react-icons/fa6";
 
 interface propsType {
   totalPage: number;
+  onClickPage: (page: number) => void;
 }
 
-export const Pagination = ({ totalPage }: propsType) => {
+export const Pagination = ({ totalPage, onClickPage }: propsType) => {
   const [currentPages, setCurrentPages] = useState([1, 2, 3, 4, 5]);
 
   const handlePreviousButtonClick = () => {
@@ -38,7 +39,8 @@ export const Pagination = ({ totalPage }: propsType) => {
           className={`hover:underline rounded-full w-8 bg-white ${
             page >= totalPage && "text-gray"
           }`}
-          disabled={currentPages[4] >= totalPage}
+          disabled={page >= totalPage}
+          onClick={() => onClickPage(page)}
         >
           {page}
         </button>

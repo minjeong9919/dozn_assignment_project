@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DataListResponseType } from "../types/dataTypes";
 import { DataType } from "../types/dataTypes";
 import { Pagination } from "../components/Pagination";
-// import { mockData } from "../mock/mockData";
+import { mockData } from "../mock/mockData";
 
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 
@@ -23,7 +23,7 @@ const Home = () => {
     "제공기관",
   ];
 
-  const dataListAPI = async (): Promise<DataListResponseType | undefined> => {
+  const getDataList = async (): Promise<DataListResponseType | undefined> => {
     const url = `${BASE_URL}/admin/api/user/api/list?pageSize=10&pageIdx=${currentPage}`;
     const token = localStorage.getItem("accesstoken");
 
@@ -44,11 +44,50 @@ const Home = () => {
     setLoading(false);
   };
 
+  const getMockData = (page: number): DataListResponseType => {
+    const { list, totalCount } = mockData.data;
+    const totalPage = Math.ceil(totalCount / 10);
+
+    const startIndex = (page - 1) * 10;
+    const endIndex = startIndex + 10;
+
+    if (page > totalPage || page < 1) {
+      setLoading(false);
+      return {
+        errYn: "Y",
+        code: "3000200",
+        data: {
+          list: [],
+          totalCount: String(totalCount),
+          totalPage: String(totalCount),
+        },
+        msg: "[ERROR] 요청된 페이지가 범위를 벗어났습니다.",
+      };
+    }
+
+    setLoading(false);
+    return {
+      code: "3000200",
+      data: {
+        list: list.slice(startIndex, endIndex),
+        totalCount: String(totalCount),
+        totalPage: String(totalPage),
+      },
+      errYn: "N",
+      msg: "[SUCCESS] 조회 성공",
+    };
+  };
+
   useEffect(() => {
-    dataListAPI();
+    // getDataList();
+    const response = getMockData(currentPage);
+    setData(response.data.list);
+    setTotalPage(Number(response.data.totalPage));
   }, [currentPage]);
 
-  console.log(data);
+  const handleClickPagination = (page: number) => {
+    setCurrentPage(page);
+  };
 
   if (loading) {
     return <div>로딩중</div>;
@@ -56,7 +95,7 @@ const Home = () => {
 
   return (
     <div className='pt-5'>
-      <table className='p-10 text-5xl mx-auto mb-5'>
+      <table className='w-11/12 p-10 text-5xl mx-auto mb-5'>
         <caption className='mb-10 font-extrabold'>
           API 목록 조회 결과입니다.
         </caption>
@@ -84,7 +123,7 @@ const Home = () => {
           ))}
         </tbody>
       </table>
-      <Pagination totalPage={23} />
+      <Pagination totalPage={totalPage} onClickPage={handleClickPagination} />
     </div>
   );
 };
