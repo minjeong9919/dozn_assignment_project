@@ -58,8 +58,11 @@ const Home = () => {
     setOpenPopup(true);
   };
 
+  const commonTableContentStyle =
+    "p-2 font-medium text-lg border-b-2 border-gray";
+
   return (
-    <div className='pt-5'>
+    <div className='pt-10'>
       {openPopup && calledData && (
         <Popup ref={popupRef} onClose={handleClosePopup} data={calledData} />
       )}
@@ -67,10 +70,13 @@ const Home = () => {
         <caption className='mb-10 font-extrabold'>
           API 목록 조회 결과입니다.
         </caption>
-        <thead className='text-xl border'>
+        <thead className='text-xl'>
           <tr>
             {colTitles.map((colTitle) => (
-              <th key={colTitle} className='border text-center font-bold p-2'>
+              <th
+                key={colTitle}
+                className='border-y-2 text-center font-bold p-2'
+              >
                 {colTitle}
               </th>
             ))}
@@ -79,15 +85,21 @@ const Home = () => {
         <tbody className='text-xl'>
           {data?.data.list.map((value, idx) => (
             <tr key={value.apiNm}>
-              <th className='border p-2'>{value.apiNm || "-"} </th>
-              <th className='border p-2'>{value.apiCd || "-"}</th>
-              <th className='border p-2 '>{value.apiDesc || "-"}</th>
-              <th className='border p-2'>{value.cmnCdLginType || "-"}</th>
-              <th className='border p-2'>{value.cmnCdLginTypeNm || "-"}</th>
-              <th className='border p-2'>{value.kwrdCd || "-"}</th>
-              <th className='border p-2'>{value.kwrdNm || "-"}</th>
-              <th className='border p-2'>{value.prvr || "-"}</th>
-              <th className='border p-2'>
+              <th className={commonTableContentStyle}>{value.apiCd || "-"}</th>
+              <th className={commonTableContentStyle}>
+                {value.apiDesc || "-"}
+              </th>
+              <th className={commonTableContentStyle}>{value.apiNm || "-"} </th>
+              <th className={commonTableContentStyle}>
+                {value.cmnCdLginType || "-"}
+              </th>
+              <th className={commonTableContentStyle}>
+                {value.cmnCdLginTypeNm || "-"}
+              </th>
+              <th className={commonTableContentStyle}>{value.kwrdCd || "-"}</th>
+              <th className={commonTableContentStyle}>{value.kwrdNm || "-"}</th>
+              <th className={commonTableContentStyle}>{value.prvr || "-"}</th>
+              <th className={commonTableContentStyle}>
                 <button
                   className='bg-primary p-2 text-white rounded'
                   onClick={() => handleOpenPopup(idx)}

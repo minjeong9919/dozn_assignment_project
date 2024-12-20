@@ -36,7 +36,7 @@ export const Pagination = ({ totalPage, onClickPage }: propsType) => {
       {currentPages.map((page) => (
         <button
           key={page}
-          className={`hover:underline rounded-full w-8 bg-white ${
+          className={`hover:underline rounded-full w-8 bg-gray100 ${
             page >= totalPage && "text-gray"
           }`}
           disabled={page >= totalPage}
