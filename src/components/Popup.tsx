@@ -21,6 +21,18 @@ export const Popup = forwardRef<HTMLDivElement, PropsType>(
       `/admin/api/recruit/scrp-recruit?mdulCustCd=${mdulCustCd}&apiCd=${apiCd}`
     );
 
+    if (!error) {
+      const history = JSON.parse(localStorage.getItem("history") || "[]");
+
+      const isDuplicate = history.some(
+        (item: DataType) => item.apiCd === data.apiCd
+      );
+
+      if (!isDuplicate) {
+        const updatedHistory = [...history, data];
+        localStorage.setItem("history", JSON.stringify(updatedHistory));
+      }
+    }
     const renderObject = (obj: ScrappingDataResonseType) => {
       return (
         <div className='h-[calc(100%-50px)] overflow-scroll'>
@@ -49,8 +61,6 @@ export const Popup = forwardRef<HTMLDivElement, PropsType>(
         </div>
       );
     };
-
-    console.log(scrappingData);
 
     return (
       <div className=' fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
