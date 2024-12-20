@@ -11,7 +11,7 @@ const Input = forwardRef<HTMLInputElement, PropsType>(
       <div className='w-full flex flex-col gap-3 mb-5 font-bold'>
         {title}
         <input
-          className='border-2 border-primary rounded py-1 px-2'
+          className='border-2 border-primary rounded py-1 px-2 bg-gray100'
           ref={ref}
           {...rest}
         />
