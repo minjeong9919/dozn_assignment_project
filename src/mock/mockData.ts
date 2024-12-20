@@ -1,3 +1,8 @@
+/**
+ * pagination 기능을 테스트하기 위한 mock 데이터 입니다.
+ * 해당 파일은 그냥 패스하셔도 됩니다.
+ */
+
 export const mockData = {
   code: "3000200",
   data: {

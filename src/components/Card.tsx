@@ -19,6 +19,10 @@ export const Card = ({
   const [clickedStar, setClickedStar] = useState(initialBookmarkStatus);
 
   const handleStar = () => {
+    /**
+     * 북마크 별을 누르면 실행되는 함수입니다.
+     * 함수 파라미터로는 눌린 카드의 API 이름과 눌림의 상태를 전달합니다.
+     */
     onClickStar(apiNm, !clickedStar);
     setClickedStar(!clickedStar);
   };

@@ -1,5 +1,10 @@
 import { DecodedJWTType } from "../types/authType";
 
+/**
+ *
+ * 액세스 토큰을 입력 파라미터로 받습니다.
+ * 해당 액세스 토큰의 유효성을 체크하는 합수입니다.
+ */
 export const validateJWT = (accessToken: string) => {
   if (
     !accessToken ||

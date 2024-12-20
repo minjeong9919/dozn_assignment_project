@@ -33,11 +33,24 @@ export const Popup = forwardRef<HTMLDivElement, PropsType>(
         localStorage.setItem("history", JSON.stringify(updatedHistory));
       }
     }
+
+    /**
+     *
+     * 동적인 데이터를 렌더링하기 위한 재귀 함수입니다.
+     *
+     * 각기 다른 데이터 구조를 렌더링하기 위해 정해진 Key 값을 갖는
+     * 데이터 외의 value 값이 나올 때까지 재귀 함수를 돌립니다.
+     * 만약, 원하는 key 값이 나오면 해당 key 값과 value 값을 렌더링합니다.
+     */
+
     const renderObject = (obj: ScrappingDataResonseType) => {
       return (
         <div className='h-[calc(100%-50px)] overflow-scroll'>
           {Object.entries(obj).map(([key, value]) => {
             if (
+              /**
+               * 해당 key 값들은 렌더링하기 위한 데이터가 아니므로 바로 return 합니다.
+               */
               key === "code" ||
               key === "msg" ||
               key === "byteLength" ||
