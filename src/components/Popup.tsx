@@ -66,7 +66,7 @@ export const Popup = forwardRef<HTMLDivElement, PropsType>(
       <div className=' fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center'>
         <div
           ref={ref}
-          className='bg-white rounded p-10 w-11/12 h-3/4 p-10 flex flex-col'
+          className='bg-white rounded p-10 w-11/12 h-3/4 p-10 flex flex-col z-10 bg-opacity-100'
         >
           {loading && (
             <div className='h-[calc(100%-50px)] flex justify-center items-center'>
