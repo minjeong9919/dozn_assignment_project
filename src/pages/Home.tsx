@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DataListResponseType } from "../types/dataTypes";
-import { FaArrowLeft } from "react-icons/fa6";
 import { DataType } from "../types/dataTypes";
+import { Pagination } from "../components/Pagination";
 // import { mockData } from "../mock/mockData";
 
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
@@ -55,33 +55,37 @@ const Home = () => {
   }
 
   return (
-    <table className='p-10 text-5xl '>
-      <caption className='mb-10'>API 목록 조회 결과입니다.</caption>
-      <thead className='text-xl border'>
-        <tr>
-          {colTitles.map((colTitle) => (
-            <th key={colTitle} className='border text-center font-bold'>
-              {colTitle}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className='text-xl'>
-        {data?.map((value) => (
-          <tr key={value.apiNm}>
-            <th className='border'>{value.apiNm}</th>
-            <th className='border'>{value.apiCd}</th>
-            <th className='border'>{value.apiDesc}</th>
-            <th className='border'>{value.cmnCdLginType}</th>
-            <th className='border'>{value.cmnCdLginTypeNm}</th>
-            <th className='border'>{value.kwrdCd}</th>
-            <th className='border'>{value.kwrdNm}</th>
-            <th className='border'>{value.prvr}</th>
+    <div className='pt-5'>
+      <table className='p-10 text-5xl mx-auto mb-5'>
+        <caption className='mb-10 font-extrabold'>
+          API 목록 조회 결과입니다.
+        </caption>
+        <thead className='text-xl border'>
+          <tr>
+            {colTitles.map((colTitle) => (
+              <th key={colTitle} className='border text-center font-bold p-2'>
+                {colTitle}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-      <button>pagination</button>
-    </table>
+        </thead>
+        <tbody className='text-xl'>
+          {data?.map((value) => (
+            <tr key={value.apiNm}>
+              <th className='border p-2'>{value.apiNm}</th>
+              <th className='border p-2'>{value.apiCd}</th>
+              <th className='border p-2 '>{value.apiDesc}</th>
+              <th className='border p-2'>{value.cmnCdLginType}</th>
+              <th className='border p-2'>{value.cmnCdLginTypeNm}</th>
+              <th className='border p-2'>{value.kwrdCd}</th>
+              <th className='border p-2'>{value.kwrdNm}</th>
+              <th className='border p-2'>{value.prvr}</th>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Pagination totalPage={23} />
+    </div>
   );
 };
 
