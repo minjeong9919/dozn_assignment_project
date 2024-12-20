@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # dozn_assignment_project
 ![image](https://github.com/user-attachments/assets/ed4b0703-9b65-461f-902e-1a42f1a22cba)
 <br/> (주)더즌 사전과제 입니다. <br/>
