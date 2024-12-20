@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { DataListResponseType, DataType } from "../types/dataTypes";
 import { Pagination } from "../components/Pagination";
 import { useFetch } from "../hooks/useFetch";
 import { checkAccessToken } from "../utils/checkAccessToken";
 import { Popup } from "../components/Popup";
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const Home = () => {
   checkAccessToken();
@@ -11,6 +12,13 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openPopup, setOpenPopup] = useState(false);
   const [calledData, setCalledData] = useState<DataType | null>(null);
+
+  const handleClosePopup = () => {
+    setOpenPopup(false);
+  };
+
+  const popupRef = useRef<HTMLDivElement>(null);
+  useOutsideClick({ ref: popupRef, handler: handleClosePopup });
 
   const { loading, error, data } = useFetch<DataListResponseType>(
     `/admin/api/user/api/list?pageSize=10&pageIdx=${currentPage}`
@@ -50,14 +58,10 @@ const Home = () => {
     setOpenPopup(true);
   };
 
-  const handleClosePopup = () => {
-    setOpenPopup(false);
-  };
-
   return (
     <div className='pt-5'>
       {openPopup && calledData && (
-        <Popup onClose={handleClosePopup} data={calledData} />
+        <Popup ref={popupRef} onClose={handleClosePopup} data={calledData} />
       )}
       <table className='w-11/12 p-10 text-5xl mx-auto mb-5'>
         <caption className='mb-10 font-extrabold'>
