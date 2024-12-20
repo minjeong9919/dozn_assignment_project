@@ -27,10 +27,11 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<SigninFormDataType> = async (formData) => {
     const result = await postSignin(formData);
-    if (result.errYn === "N") {
-      console.log(result);
-      localStorage.setItem("accesstoken", result.data.accessToken);
+    if (result.errYn === "Y") {
+      return alert("로그인에 실패했습니다.");
     }
+    localStorage.setItem("accesstoken", result.data.accessToken);
+    window.location.href = "/";
   };
 
   return (
