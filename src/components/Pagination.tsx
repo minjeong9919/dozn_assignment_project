@@ -4,7 +4,7 @@ import { FaAngleRight } from "react-icons/fa6";
 
 interface propsType {
   totalPage: number;
-  onClickPage: (page: number) => void;
+  onClickPage: () => void;
 }
 
 export const Pagination = ({ totalPage, onClickPage }: propsType) => {
@@ -40,7 +40,7 @@ export const Pagination = ({ totalPage, onClickPage }: propsType) => {
             page >= totalPage && "text-gray"
           }`}
           disabled={page >= totalPage}
-          onClick={() => onClickPage(page)}
+          onClick={() => onClickPage()}
         >
           {page}
         </button>

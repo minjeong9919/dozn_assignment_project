@@ -2,14 +2,8 @@ import Input from "../components/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { postSignin } from "../api/authAPI";
 import { SigninFormDataType } from "../types/authType";
-import { validateJWT } from "../utils/validateJWT";
 
 const Login = () => {
-  const isTokenExpired = validateJWT();
-  if (isTokenExpired) {
-    localStorage.removeItem("accesstoken");
-  }
-
   const {
     register,
     formState: { errors, isSubmitting },
