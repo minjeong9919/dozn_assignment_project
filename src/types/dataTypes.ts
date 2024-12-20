@@ -14,6 +14,7 @@ export interface DataType {
   mdulCustCd: string | undefined;
   mdulNm: string | undefined;
   userApiStus: string | undefined;
+  callTime?: Date;
 }
 
 export interface DataListResponseType {
