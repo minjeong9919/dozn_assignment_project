@@ -9,6 +9,7 @@ export default {
         gray: "#B2B2B2",
         red: "#FF0000",
         gray100: "#f2f2f2",
+        gray200: "#E2E2E2",
       },
     },
   },

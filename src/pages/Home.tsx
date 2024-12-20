@@ -62,7 +62,7 @@ const Home = () => {
     "p-2 font-medium text-lg border-b-2 border-gray";
 
   return (
-    <div className='pt-10'>
+    <div className='pt-5'>
       {openPopup && calledData && (
         <Popup ref={popupRef} onClose={handleClosePopup} data={calledData} />
       )}
@@ -70,12 +70,12 @@ const Home = () => {
         <caption className='mb-10 font-extrabold'>
           API 목록 조회 결과입니다.
         </caption>
-        <thead className='text-xl'>
+        <thead className='text-xl border'>
           <tr>
             {colTitles.map((colTitle) => (
               <th
                 key={colTitle}
-                className='border-y-2 text-center font-bold p-2'
+                className='border-b-2 text-center font-bold p-2'
               >
                 {colTitle}
               </th>
