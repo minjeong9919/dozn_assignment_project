@@ -1,6 +1,6 @@
 # dozn_assignment_project
-(주)더즌 사전과제 입니다. 
 ![image](https://github.com/user-attachments/assets/ed4b0703-9b65-461f-902e-1a42f1a22cba)
+<br/> (주)더즌 사전과제 입니다. <br/>
 
 
 ## 프로젝트의 구성
