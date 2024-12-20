@@ -1,7 +1,6 @@
 import { DecodedJWTType } from "../types/authType";
 
-export const validateJWT = () => {
-  const accessToken = localStorage.getItem("accesstoken");
+export const validateJWT = (accessToken: string) => {
   if (
     !accessToken ||
     typeof accessToken !== "string" ||
