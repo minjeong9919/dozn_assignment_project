@@ -24,36 +24,38 @@ export const Card = ({
   };
 
   return (
-    <div className='shadow-xl w-full p-5 rounded cursor-pointer ' {...rest}>
+    <div className='shadow-xl w-full p-5 rounded cursor-pointer '>
       <div className='flex w-full items-center justify-between mb-6'>
         <h2 className='text-primary text-2xl font-extrabold'>{apiNm} </h2>
         {clickedStar ? (
-          <FaStar size={25} onClick={() => handleStar()} />
+          <FaStar size={25} onClick={handleStar} />
         ) : (
-          <FaRegStar size={25} onClick={() => handleStar()} />
+          <FaRegStar size={25} onClick={handleStar} />
         )}
       </div>
-      <ul className='flex flex-col gap-2'>
-        <li>
-          <strong>API 이름: </strong>
-          {apiNm}
-        </li>
-        <li>
-          <strong>API 코드: </strong>
-          {apiCd}
-        </li>
-        <li>
-          <strong>모듈 이름: </strong>
-          {mdulNm}
-        </li>
-        <li>
-          <strong>모듈 코드: </strong>
-          {mdulCustCd}
-        </li>
-        <li>
-          <strong>호출 시간: </strong> {callTime?.toString()}
-        </li>
-      </ul>
+      <div {...rest}>
+        <ul className='flex flex-col gap-2'>
+          <li>
+            <strong>API 이름: </strong>
+            {apiNm}
+          </li>
+          <li>
+            <strong>API 코드: </strong>
+            {apiCd}
+          </li>
+          <li>
+            <strong>모듈 이름: </strong>
+            {mdulNm}
+          </li>
+          <li>
+            <strong>모듈 코드: </strong>
+            {mdulCustCd}
+          </li>
+          <li>
+            <strong>호출 시간: </strong> {callTime?.toString()}
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };
